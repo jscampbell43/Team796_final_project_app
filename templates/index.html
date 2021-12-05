@@ -1,6 +1,13 @@
 {{ bootstrap.load_css() }}
+{{ bootstrap.load_js() }}
 
 <div class="container">
     <p>Hello Final Project!!!</p>
+
+    <ul>
+        {% for item in my_data %}
+        <li> {{ item.title }} </li>
+        {% endfor %}
+    </ul>
 
 </div>
