@@ -14,7 +14,7 @@ payload = {
   'start_date': '2017-03-09',
   'end_date': '2017-03-11'
 }
-endpoint = 'https://jsonplaceholder.typicode.com/posts'
+endpoint = 'https://world.openfoodfacts.org/api/v0/product/737628064502.json'
 try:
   r = requests.get(endpoint, params=payload)
   data = r.json()
