@@ -36,7 +36,7 @@ payload = {
 #tag_0 is where the actual search term will be entered.
 
 # This is how an API call is composed the "us." at the beginning signifies that it will be us products only.
-endpoint = 'https://us.openfoodfacts.org/cgi/search.pl?action=process&tagtype_0=categories&tag_contains_0=contains&tag_0=meats&fields=product_name,image_url&json=1'
+endpoint = 'https://us.openfoodfacts.org/cgi/search.pl?action=process&tagtype_0=categories&tag_contains_0=contains&tag_0=cereals&fields=product_name,image_url&json=1'
 # endpoint = 'https://us.openfoodfacts.org/cgi/search.pl?action=process&tagtype_0=categories&tag_contains_0=contains&tag_0=meat&tagtype_1=nutrition_grades&tag_contains_1=contains&tag_1=A&additives=without&ingredients_from_palm_oil=without&json=1'
 
 
