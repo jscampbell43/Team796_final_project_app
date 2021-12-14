@@ -26,6 +26,14 @@ app = Flask(__name__)
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
-        print(request.form.getlist('mycheckbox'))
-        return 'Done'
+        # print(request.form.getlist('mycheckbox')) #prints the number selected in powershell
+        # if document.getElementById('mycheckbox') == '1': //useless
+#NOTE TO SELF: NAME IN CHEBCKBX INDEX IS WHAT IS INSERTED BELOW TO SEARCH FOR THE DESIRED RESULT
+        if request.form.get('1'):
+            return 'unoooooooo'
+        # return 'Done' 
+        elif request.form.get('2'):
+            return 'dossssssssssssss'
+        elif request.form.get('3'):
+            return 'tressssssssssss'
     return render_template('filter.html')
