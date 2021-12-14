@@ -19,10 +19,13 @@
 # filtered = filter(include, input)
 
 #NEW PLAN
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    if request.method == 'POST':
+        print(request.form.getlist('mycheckbox'))
+        return 'Done'
     return render_template('filter.html')
