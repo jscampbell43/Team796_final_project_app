@@ -3,6 +3,20 @@
 
 <div class="container">
     <p>Hello Final Project!!!</p>
+    
+    <div class="container mb-4">  
+    <div class="card mt-4">
+        <div class="card-body">
+        <h2 class="card-title">Search For A Food Product: </h2>
+        <form method="POST" action="/">
+            {{ form.csrf_token }}
+            {{ form.searchBar.label }} 
+            {{ form.searchBar(size=32) }}
+            <input type="submit" value="Submit">
+        </form>
+        </div>
+    </div>
+    </div>
 
     <ul>
         {% for item in my_data %}

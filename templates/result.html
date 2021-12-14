@@ -1,0 +1,18 @@
+{{ bootstrap.load_css() }}
+{{ bootstrap.load_js() }}
+
+<div class="container">
+    <h1>Nutrition App</h1>
+
+    <ul>
+        {% for item in my_data.products %}
+        <!-- <li> {{ item.generic_name }} </li>  -->
+        <li> 
+            <img src="{{item.image_url}}" alt="{{item.product_name}}" width = "200"> 
+            {{ item.product_name }} 
+            <br><br>
+        </li>
+        {% endfor %}
+    </ul>
+
+</div>
