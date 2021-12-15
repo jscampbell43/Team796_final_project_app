@@ -36,11 +36,13 @@ my_info = {
 
 class Search_Terms(FlaskForm):
   searchBar = StringField('Search Term', validators=[DataRequired()])
+  searchBar2 = StringField('Search Term 2', validators=[DataRequired()])
+
 
 searchTerms = []
 
-def store_term(newTerm):
-  searchTerms.append(dict(term = newTerm))
+def store_term(newTerm, newTerm2):
+  searchTerms.append(dict(term = newTerm, term2 = newTerm2))
 
 @app.route('/', methods = ('GET', 'POST'))
 def home():
@@ -48,18 +50,23 @@ def home():
   searchTerms = []
   form = Search_Terms()
   if form.validate_on_submit():
-    store_term(form.searchBar.data)
+    store_term(form.searchBar.data, form.searchBar2.data)
     return redirect('/results')
   return render_template('index.html', form = form)
 
 @app.route('/results')
 def result():
   temp = searchTerms[0]['term']
+  temp2 = searchTerms[0]['term2']
   print(temp)
+  print(temp2)
   endpoint = 'https://us.openfoodfacts.org/cgi/search.pl?action=process&tagtype_0=categories&tag_contains_0=contains&tag_0='
   #meat&fields=product_name,image_url&json=1'
-  endpoint = endpoint + str(temp)
-  endpoint = endpoint + '&fields=product_name,image_url&json=1'
+  endpoint = endpoint + str(temp)  
+  endpoint = endpoint + '&tagtype_1=brand&tag_contains_1=contains&tag_1='
+  endpoint = endpoint + str(temp2)
+  endpoint = endpoint + '&fields=product_name,image_url&json=1'  
+  print(endpoint)
   try:
     r = requests.get(endpoint, params=payload)
     data = r.json()
