@@ -35,38 +35,54 @@ my_info = {
 }
 
 class Search_Terms(FlaskForm):
-  searchBar = StringField('Search Term', validators=[DataRequired()])
-  searchBar2 = StringField('Search Term 2', validators=[DataRequired()])
+  searchBarKeyword = StringField('General Search', validators=[DataRequired()])
+  searchBar = StringField('Category')#, validators=[DataRequired()])
+  searchBar2 = StringField('Nutrition Grade')#, validators=[DataRequired()])
 
 
 searchTerms = []
 
-def store_term(newTerm, newTerm2):
-  searchTerms.append(dict(term = newTerm, term2 = newTerm2))
+def store_term(newKeyword, newTerm, newTerm2):
+  searchTerms.append(dict(keyword = newKeyword, term = newTerm, term2 = newTerm2))
 
 @app.route('/', methods = ('GET', 'POST'))
 def home():
   # clear dictionary here:
-  searchTerms = []
   form = Search_Terms()
   if form.validate_on_submit():
-    store_term(form.searchBar.data, form.searchBar2.data)
+    searchTerms.clear()
+    store_term(form.searchBarKeyword.data, form.searchBar.data, form.searchBar2.data)
     return redirect('/results')
   return render_template('index.html', form = form)
 
 @app.route('/results')
 def result():
+  pprint(searchTerms)
+  # Get search term and criteria from searchTerms dictionary 
+  tempKeyword = searchTerms[0]['keyword']
   temp = searchTerms[0]['term']
   temp2 = searchTerms[0]['term2']
+  print(tempKeyword)
   print(temp)
   print(temp2)
-  endpoint = 'https://us.openfoodfacts.org/cgi/search.pl?action=process&tagtype_0=categories&tag_contains_0=contains&tag_0='
-  #meat&fields=product_name,image_url&json=1'
-  endpoint = endpoint + str(temp)  
-  endpoint = endpoint + '&tagtype_1=brand&tag_contains_1=contains&tag_1='
-  endpoint = endpoint + str(temp2)
+  # Beggining of URL
+  endpoint = 'https://us.openfoodfacts.org/cgi/search.pl?search_terms='
+  # Add general search keyword
+  endpoint = endpoint + str(tempKeyword)
+  # Set search_simple and action
+  endpoint = endpoint + '&search_simple=1&action=process'
+  # If Category is not blank add category criteria
+  if temp != '':
+    endpoint = endpoint + '&tagtype_0=categories&tag_contains_0=contains&tag_0='
+    endpoint = endpoint + str(temp) 
+  # If Nutrition Grade is not blank add nutrition_grades
+  if temp2 != '':
+     endpoint = endpoint + '&tagtype_1=nutrition_grades&tag_contains_1=contains&tag_1='
+     endpoint = endpoint + str(temp2)
+  # Ending of URL
   endpoint = endpoint + '&fields=product_name,image_url&json=1'  
   print(endpoint)
+  # API Call
   try:
     r = requests.get(endpoint, params=payload)
     data = r.json()

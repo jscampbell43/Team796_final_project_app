@@ -10,10 +10,16 @@
         <h2 class="card-title">Search For A Food Product: </h2>
         <form method="POST" action="/">
             {{ form.csrf_token }}
+            <!--searchBarKeyword-->
+            {{ form.searchBarKeyword.label }} 
+            {{ form.searchBarKeyword(size=32) }}
+            <br><br>
             {{ form.searchBar.label }} 
             {{ form.searchBar(size=32) }}
+            <br><br>
             {{ form.searchBar2.label }} 
             {{ form.searchBar2(size=32) }}
+            <br><br>
             <input type="submit" value="Submit">
         </form>
         </div>
