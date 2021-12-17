@@ -1,15 +1,30 @@
+<!-- 
+Course: CST205
+Title: Nutrition App
+Abstract: This app is for people to search for food products using a general 
+keyword search or a search that includes criteria like "category" "nutrition_grade" etc.
+A list of search results is displayed with the product name and image.
+Authors: James Campbell, Dale Sanchez, Aret Tinoco
+Date: 12/16/21
+-->
+
 {{ bootstrap.load_css() }}
 {{ bootstrap.load_js() }}
 
 <div class="container">
     <h1>Nutrition App</h1>
-
+    <br><br>
     <ul>
         {% for item in my_data.products %}
-        <!-- <li> {{ item.generic_name }} </li>  -->
         <li> 
-            <img src="{{item.image_url}}" alt="{{item.product_name}}" width = "200"> 
-            {{ item.product_name }} 
+            <div class="container mb-4">  
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <h2 class="card-title"> {{ item.product_name }}  </h2>
+                        <img src="{{item.image_url}}" alt="{{item.product_name}}" width = "200"> 
+                    </div>
+                </div>
+            </div>
             <br><br>
         </li>
         {% endfor %}

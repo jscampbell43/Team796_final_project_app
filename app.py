@@ -1,8 +1,26 @@
-# Title: 
-# Abstract: 
-# Class: CST 205-01
-# Authors: James Campbell, Dale Saanchez, and Aret Tinoco
-# Date: 12/11/21
+# Course: CST205
+# Title: Nutrition App
+# Abstract: This app is for people to search for food products using a general 
+# keyword search or a search that includes criteria like "category" "nutrition_grade" etc.
+# A list of search results is displayed with the product name and image.
+# 
+# Authors: James Campbell, Dale Sanchez, Aret Tinoco
+# Date: 12/16/21
+# Who worked on which functions/classes/files
+# James Campbell:
+# Initial App setup app.py, result.html, API setup: endpoint, try request, except.
+# Got API response displayed as list of picture/image combos.
+# Implemented general keyword search, modified class SearchTerms, def store_term, and results route
+# Dale Sanchez:
+# 
+# Aret Tinoco:
+# 
+# 
+# Sources cited: API used: Open Food Facts - https://world.openfoodfacts.org/
+# For Open Food Facts API documentation: https://world.openfoodfacts.org/data
+#
+# Github Link: https://github.com/jscampbell43/Team796_final_project_app
+
 
 from flask import Flask, render_template, flash, redirect
 from flask_bootstrap import Bootstrap
@@ -24,78 +42,64 @@ payload = {
   'start_date': '2017-03-09',
   'end_date': '2017-03-11'
 }
-endpoint = 'https://us.openfoodfacts.org/cgi/search.pl?action=process&tagtype_0=categories&tag_contains_0=contains&tag_0=meat&fields=product_name,image_url&json=1'
-try:
-  r = requests.get(endpoint, params=payload)
-  data = r.json()
-  pprint(data[0:10])
-except:
-  print('please try again')
 
-
-# Ignore this just a place holder for whatever we are passing
-my_info = {
-  'days': ['sun', 'mon', 'tues'],
-  'flavors': ['sweet', 'sour'],
-  'colors': ['blue', 'green', 'brown']
-}
-
+# Class connected to Flaskform
 class Search_Terms(FlaskForm):
-  searchBar = StringField('Search Term', validators=[DataRequired()])
-  searchBar2 = StringField('Search Term 2', validators=[DataRequired()])
+  searchBarKeyword = StringField('General Search', validators=[DataRequired()])
+  searchBar = StringField('Category')#, validators=[DataRequired()])
+  searchBar2 = StringField('Nutrition Grade')#, validators=[DataRequired()])
 
-
+# List for storing dictionary of returned search terms
 searchTerms = []
 
-def store_term(newTerm, newTerm2):
-  searchTerms.append(dict(term = newTerm, term2 = newTerm2))
+# Function to take form input terms and add them to dictionary and add to searchTerms list
+def store_term(newKeyword, newTerm, newTerm2):
+  searchTerms.append(dict(keyword = newKeyword, term = newTerm, term2 = newTerm2))
 
 @app.route('/', methods = ('GET', 'POST'))
 def home():
-  # clear dictionary here:
-  searchTerms = []
+  # Form submission logic
   form = Search_Terms()
   if form.validate_on_submit():
-    store_term(form.searchBar.data, form.searchBar2.data)
+    # clear dictionary here
+    searchTerms.clear()
+    # store new terms recieved from the form to dictionary and add to searchTerms list
+    store_term(form.searchBarKeyword.data, form.searchBar.data, form.searchBar2.data)
     return redirect('/results')
   return render_template('index.html', form = form)
 
 @app.route('/results')
 def result():
+  pprint(searchTerms)
+  # Get search term and criteria from searchTerms dictionary 
+  tempKeyword = searchTerms[0]['keyword']
   temp = searchTerms[0]['term']
   temp2 = searchTerms[0]['term2']
+  print(tempKeyword)
   print(temp)
   print(temp2)
-  endpoint = 'https://us.openfoodfacts.org/cgi/search.pl?action=process&tagtype_0=categories&tag_contains_0=contains&tag_0='
-  #meat&fields=product_name,image_url&json=1'
-  endpoint = endpoint + str(temp)  
-  endpoint = endpoint + '&tagtype_1=brand&tag_contains_1=contains&tag_1='
-  endpoint = endpoint + str(temp2)
+  # Beginning of URL for call to Open Food Facts API
+  endpoint = 'https://us.openfoodfacts.org/cgi/search.pl?search_terms='
+  # Add general search keyword
+  endpoint = endpoint + str(tempKeyword)
+  # Set search_simple and action
+  endpoint = endpoint + '&search_simple=1&action=process'
+  # If Category is not blank add category criteria
+  if temp != '':
+    endpoint = endpoint + '&tagtype_0=categories&tag_contains_0=contains&tag_0='
+    endpoint = endpoint + str(temp) 
+  # If Nutrition Grade is not blank add nutrition_grades
+  if temp2 != '':
+     endpoint = endpoint + '&tagtype_1=nutrition_grades&tag_contains_1=contains&tag_1='
+     endpoint = endpoint + str(temp2)
+  # Ending of URL
   endpoint = endpoint + '&fields=product_name,image_url&json=1'  
   print(endpoint)
+  # API Call
   try:
     r = requests.get(endpoint, params=payload)
     data = r.json()
     pprint(data[0:10])
   except:
-    print('please try again, in result.route')
+    print('please try again, in route /results')
   return render_template('result.html', my_data = data)
-
-
-
-
-
-
-# Failed attempt at search implementation  
-# @app.route('/form')
-# def form():
-#     return render_template('form.html')
- 
-# @app.route('/data/', methods = ['POST', 'GET'])
-# def data():
-#     if request.method == 'GET':
-#         return f"The URL /data is accessed directly. Try going to '/form' to submit form"
-#     if request.method == 'POST':
-#         #form_data = request.form
-#         search = request.form.Search
-#         return render_template('data.html',form_data = search)
