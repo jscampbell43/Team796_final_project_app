@@ -1,0 +1,41 @@
+README Final Project
+Name of project: Nutrition App
+
+Names of team members:
+James Campbell
+Dale Sanchez
+Aret Tinoco
+
+Class: CST205
+Date: 12/16/21
+
+How to run program:
+Flask Web application, run from final_project_app directory at the command line with:
+export FLASK_APP=app.py
+export FLASK_DEBUG=1
+flask run
+Visit the local URL that is generated in your web browser.
+Enter a single search keyword in general search bar,
+Or add 1 or more criteria to your search including category and nutrition grade.
+
+Link to GitHub repository:
+https://github.com/jscampbell43/Team796_final_project_app
+
+Future work:
+We want to make the images/titles in each row clickable. Upon clicking an item a secondary page would appear with additional nutritional information for the selected product.
+We also would like to add more criteria to the search, including:
+brands
+packaging
+labels
+origins
+manufacturing_places
+emb_codes
+purchase_places
+stores
+countries
+additives
+allergens
+traces
+states
+contains
+does_not_contain
