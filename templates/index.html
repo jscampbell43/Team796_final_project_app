@@ -1,16 +1,25 @@
+<!-- 
+Course: CST205
+Title: Nutrition App
+Abstract: This app is for people to search for food products using a general 
+keyword search or a search that includes criteria like "category" "nutrition_grade" etc.
+A list of search results is displayed with the product name and image.
+Authors: James Campbell, Dale Sanchez, Aret Tinoco
+Date: 12/16/21
+-->
+
 {{ bootstrap.load_css() }}
 {{ bootstrap.load_js() }}
 
 <div class="container">
-    <p>Hello Final Project!!!</p>
-    
+    <h1>Nutrition App</h1>
+    <br><br>
     <div class="container mb-4">  
     <div class="card mt-4">
         <div class="card-body">
         <h2 class="card-title">Search For A Food Product: </h2>
         <form method="POST" action="/">
             {{ form.csrf_token }}
-            <!--searchBarKeyword-->
             {{ form.searchBarKeyword.label }} 
             {{ form.searchBarKeyword(size=32) }}
             <br><br>
