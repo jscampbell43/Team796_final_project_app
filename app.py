@@ -14,7 +14,8 @@
 # Dale Sanchez:
 # 
 # Aret Tinoco:
-# 
+# Brainstormed filter methods for the app with checkboxes, for loops, if statement and modified HTML (went unused)
+# Added second search bar for general search, modified class SearchTerms, def store_term, and results route
 # 
 # Sources cited: API used: Open Food Facts - https://world.openfoodfacts.org/
 # For Open Food Facts API documentation: https://world.openfoodfacts.org/data
