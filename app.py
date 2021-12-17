@@ -18,6 +18,8 @@
 # 
 # Sources cited: API used: Open Food Facts - https://world.openfoodfacts.org/
 # For Open Food Facts API documentation: https://world.openfoodfacts.org/data
+#
+# Github Link: https://github.com/jscampbell43/Team796_final_project_app
 
 
 from flask import Flask, render_template, flash, redirect
