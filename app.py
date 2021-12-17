@@ -12,7 +12,9 @@
 # Got API response displayed as list of picture/image combos.
 # Implemented general keyword search, modified class SearchTerms, def store_term, and results route
 # Dale Sanchez:
-# 
+# Created the initial search bar and got the basic search working. Worked with James to better fine tune
+# the search bar when it wasn't working properly. Worked on routes and Flask Forms and got them set up and
+# working for the creation of the search bar.  
 # Aret Tinoco:
 # 
 # 
