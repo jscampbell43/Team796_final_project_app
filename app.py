@@ -1,3 +1,9 @@
+# Title: 
+# Abstract: 
+# Class: CST 205-01
+# Authors: James Campbell, Dale Saanchez, and Aret Tinoco
+# Date: 12/11/21
+
 from flask import Flask, render_template, flash, redirect
 from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
